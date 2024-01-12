@@ -15,9 +15,10 @@ class StudentController extends Controller
         $validatedData = $request->validate([
             // 'sid' => 'required',
             'name' => 'required',
-            'addr' => 'required',
+            'email' => 'required',
             'pno' => 'required',
             'DOB' => 'required',
+            'addr' => 'required'
         ]);
 
         // Create a new student record in the database
