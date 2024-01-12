@@ -30,10 +30,7 @@
             <input type="text" class="form-control" id="name" name="name" placeholder="Enter Student Name" required>
         </div>
 
-        <div class="form-group">
-            <label for="addr">Student Address:</label>
-            <input type="text" class="form-control" id="addr" name="addr" placeholder="Enter Student Address" required>
-        </div>
+        
 
         <div class="form-group">
             <label for="pno">Student Phone Number:</label>
@@ -43,6 +40,10 @@
         <div class="form-group">
             <label for="DOB">Student Date of Birth:</label>
             <input type="date" class="form-control" id="DOB" name="DOB" placeholder="Enter Date of Birth" required>
+        </div>
+
+        <div class="form-group">
+            <label for="addr">Student Address:</label><textarea class="form-control" id="addr" name="addr" placeholder="Enter Student Address" required></textarea>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
