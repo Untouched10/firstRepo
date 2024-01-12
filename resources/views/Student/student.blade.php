@@ -30,7 +30,10 @@
             <input type="text" class="form-control" id="name" name="name" placeholder="Enter Student Name" required>
         </div>
 
-        
+        <div class="form-group">
+            <label for="name">Student email:</label>
+            <input type="text" class="form-control" id="email" name="email" placeholder="Enter Student Email" required>
+        </div>
 
         <div class="form-group">
             <label for="pno">Student Phone Number:</label>
