@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return true;
     }
 
+    //TODO: ADD VALIDATIONS FOR DOB AND ADDRESS
     // function validateDOB(){
     //     const dobInput = document.getElementById("DOB");
 
