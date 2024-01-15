@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('pno');
+            $table->enum('gender', ['Male', 'Female', 'Other']);
             $table->date('DOB');
             $table->string('addr');
             $table->timestamps();

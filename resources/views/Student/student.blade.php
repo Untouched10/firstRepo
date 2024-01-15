@@ -6,8 +6,11 @@
     <title>Student Details Form</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    
-
+    <style>
+        .genderContainer {
+            margin-bottom: 50px; /* Adjust the value as needed for the desired spacing */
+        }
+    </style>
 </head>
 <body>
 
@@ -45,20 +48,16 @@
         <div class="form-group">
             <label for="district">District:</label>
             <select class="form-control" id="district" name="district" required>
-                <!-- Add options for districts -->
                 <option value="district1">District 1</option>
                 <option value="district2">District 2</option>
-                <!-- Add more options as needed -->
             </select>
         </div>
 
         <div class="form-group">
             <label for="tehsil">Tehsil:</label>
             <select class="form-control" id="tehsil" name="tehsil" required>
-                <!-- Add options for tehsils -->
                 <option value="tehsil1">Tehsil 1</option>
                 <option value="tehsil2">Tehsil 2</option>
-                <!-- Add more options as needed -->
             </select>
         </div>
 
@@ -72,21 +71,29 @@
             <input type="text" class="form-control" id="pno" name="pno" placeholder="Enter Phone Number" required>
         </div>
 
+        <div class="genderContainer">
         <div class="form-group">
             <label>Gender:</label>
+            <div class="row"><div class="col-auto">
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="gender" id="male" value="Male" required>
                 <label class="form-check-label" for="male">Male</label>
             </div>
+        </div>
+        <div class="col-auto">
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
                 <label class="form-check-label" for="female">Female</label>
             </div>
+        </div>
+        <div class="col-auto">
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="gender" id="other" value="Other">
                 <label class="form-check-label" for="other">Other</label>
             </div>
         </div>
+    </div>
+    </div>
 
         <div class="form-group">
             <label for="DOB">Student Date of Birth:</label>
@@ -106,7 +113,7 @@
     </form>
 </div>
 
-<!-- Bootstrap JS and Popper.js -->
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
