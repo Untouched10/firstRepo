@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('pno');
             $table->enum('gender', ['Male', 'Female', 'Other']);
             $table->date('DOB');
-            $table->string('addr');
+            $table->time('TOB');
             $table->timestamps();
         });
     }

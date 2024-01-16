@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\StateController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +25,19 @@ Route::get('/', function () {
     return view('Student.student');
 });
 
-Route::post('/store-student', [StudentController::class, 'store'])->name('store.student');
+Route::get('/states ', [StateController::class, 'newState'])->name('newState');
+
+
+// Route::get('/', function () {
+//     return view('Student.state');
+// });
+
+Route::post('/store', [StudentController::class, 'store'])->name('store.Student');
+// Route::get('/', [StudentController::class, 'yourMethod']);
+
+
+// routes/web.php
+// routes/web.php
+// use App\Http\Controllers\StateController;
+
+// Route::get('/new-state', [StateController::class, 'newState'])->name('new.state');

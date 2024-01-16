@@ -16,9 +16,9 @@
 
 <div class="container mt-5">
     <h2>Student Details Form</h2>
-    <form method="post" action="{{ route('store.student') }}" id="studentForm">
+    
+    <form method="post" action="{{ route('newState') . '/' . route('store.Student') }}" id="studentForm">
         @csrf
-
         @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -36,26 +36,54 @@
         </div>
 
         <div class="form-group">
+            
             <label for="state">State:</label>
             <select class="form-control" id="state" name="state" required>
-                <!-- Add options for states -->
-                <option value="state1">State 1</option>
-                <option value="state2">State 2</option>
-                <!-- Add more options as needed -->
+                <option selected="selected">Select State</option>
+                @foreach($states as $id => $state)
+                    <option value="{{ $id }}">{{ $state }}</option>
+                @endforeach
             </select>
         </div>
+        
+        {{-- <div class="form-group">
+            <label for="district">District:</label>
+            <select class="form-control" id="district" name="district" required>
+                <option selected="selected">Select District</option>
+                @foreach($districts as $district)
+                    <option value="{{ $district->id }}">{{ $district->district_name }}</option>
+                @endforeach
+            </select>
+        </div> --}}
+
+{{-- 
+        <div class="form-group">
+            <label for="state">State:</label>
+            <select class="form-control" id="state" name="state" required>
+                {{-- @foreach($data as $d)
+                    <option value="{{$d}}">{{$d}}</option>
+                @endforeach --}}
+                {{-- <option selected="selected">Enter State</option>
+                <option value="option1">option1</option>
+                <option value="option2">option2</option>
+                <option value="option3">option3</option>
+                
+            </select>
+        </div> --}}
 
         <div class="form-group">
             <label for="district">District:</label>
             <select class="form-control" id="district" name="district" required>
+                <option selected="selected">Enter District</option>
                 <option value="district1">District 1</option>
                 <option value="district2">District 2</option>
             </select>
-        </div>
+        </div> 
 
         <div class="form-group">
             <label for="tehsil">Tehsil:</label>
             <select class="form-control" id="tehsil" name="tehsil" required>
+                <option selected="selected">Enter Tehsil</option>
                 <option value="tehsil1">Tehsil 1</option>
                 <option value="tehsil2">Tehsil 2</option>
             </select>
@@ -115,7 +143,7 @@
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script> --}}
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="{{ asset('js/validation.js') }}"></script>
 </body>

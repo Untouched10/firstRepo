@@ -8,5 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'email', 'pno', 'DOB', 'addr'];
+    protected $fillable = ['name', 'state', 'email', 'pno', 'DOB'];
+    public static function getStateDropdown()
+    {
+        return self::distinct('state')->pluck('state');
+    }
 }
