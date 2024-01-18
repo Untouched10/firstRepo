@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class State extends Model
 {
     use HasFactory;
-    protected $table = 'states';
-    protected $primaryKey = 'id';
     public function districts()
     {
-        return $this->hasMany(District::class, 'state_id', 'id');
+        return $this->hasMany(District::class, 'sid');
     }
 }

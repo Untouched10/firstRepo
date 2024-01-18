@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Student Details Form</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .genderContainer {
-            margin-bottom: 50px; /* Adjust the value as needed for the desired spacing */
+            margin-bottom: 50px;
         }
     </style>
 </head>
 <body>
 
 <div class="container mt-5">
-    <h2>Student Details Form</h2>
+    <div class="card col-md-6 mx-auto">
+        <div class="card-header">
+            <h2 class="mb-0">Student Details Form</h2>
+        </div>
+        <div class="card-body">
     
-    <form method="post" action="{{ route('newState') . '/' . route('store.Student') }}" id="studentForm">
+    <form method="post" action="{{ route('store.Student') }}" id="studentForm">
         @csrf
         @if(session('success'))
         <div class="alert alert-success">
@@ -25,17 +30,44 @@
         </div>
     @endif
 
-        {{-- <div class="form-group">
-            <label for="sid">Student ID:</label>
-            <input type="text" class="form-control" id="sid" name="sid" placeholder="Enter Student ID" required>
-        </div> --}}
+    {{-- <div class="form-group">
+        <label for="sid">Student ID:</label>
+        <input type="text" class="form-control" id="sid" name="sid" placeholder="Enter Student ID" required>
+    </div>  --}}
 
-        <div class="form-group">
-            <label for="name">Student Name:</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Student Name" required>
-        </div>
+    <div class="form-group">
+        <label for="name">Student Name:</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Student Name" required>
+    </div>
 
-        <div class="form-group">
+    <!-- State Dropdown -->
+    <div class="form-group">
+    <label for="state">Select State:</label>
+    <select class="form-control" id="state" name="state" onchange="getDistricts()">
+        <option value="">Select State</option>
+        @foreach($states as $state)
+            <option value="{{ $state->id }}">{{ $state->sname }}</option>
+        @endforeach
+    </select></div>
+
+    <!-- District Dropdown -->
+    <div class="form-group">
+    <label for="district">Select District:</label>
+    <select class="form-control" id="district" name="district" onchange="getTehsils()" disabled>
+        <option value="">Select District</option>
+    </select></div>
+
+    <!-- Tehsil Dropdown -->
+    <div class="form-group">
+    <label for="tehsil">Select Tehsil:</label>
+    <select class="form-control" id="tehsil" name="tehsil" disabled>
+        <option value="">Select Tehsil</option>
+    </select>
+</form></div>
+
+         
+
+        {{--<div class="form-group">
             
             <label for="state">State:</label>
             <select class="form-control" id="state" name="state" required>
@@ -45,8 +77,27 @@
                 @endforeach
             </select>
         </div>
-        
-        {{-- <div class="form-group">
+
+        <div class="form-group">
+            <label for="district">District:</label>
+            <select class="form-control" id="district" name="district" required>
+                <option selected="selected">Enter District</option>
+                @foreach($districts as $did => $district)
+                    <option value="{{ $did }}">{{ $district }}</option>
+                @endforeach
+            </select>
+        </div> 
+
+        <div class="form-group">
+            <label for="tehsil">Tehsil:</label>
+            <select class="form-control" id="tehsil" name="tehsil" required>
+                <option selected="selected">Enter Tehsil</option>
+                <option value="tehsil1">Tehsil 1</option>
+                <option value="tehsil2">Tehsil 2</option>
+            </select>
+        </div> --}}
+
+                {{-- <div class="form-group">
             <label for="district">District:</label>
             <select class="form-control" id="district" name="district" required>
                 <option selected="selected">Select District</option>
@@ -70,24 +121,6 @@
                 
             </select>
         </div> --}}
-
-        <div class="form-group">
-            <label for="district">District:</label>
-            <select class="form-control" id="district" name="district" required>
-                <option selected="selected">Enter District</option>
-                <option value="district1">District 1</option>
-                <option value="district2">District 2</option>
-            </select>
-        </div> 
-
-        <div class="form-group">
-            <label for="tehsil">Tehsil:</label>
-            <select class="form-control" id="tehsil" name="tehsil" required>
-                <option selected="selected">Enter Tehsil</option>
-                <option value="tehsil1">Tehsil 1</option>
-                <option value="tehsil2">Tehsil 2</option>
-            </select>
-        </div>
 
         <div class="form-group">
             <label for="name">Student email:</label>
@@ -143,6 +176,65 @@
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script>
+    function getDistricts() {
+        var stateId = document.getElementById('state').value;
+        if (stateId) {
+            // Fetch districts based on selected state
+            fetch('/get-districts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({ state_id: stateId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                var districtDropdown = document.getElementById('district');
+                districtDropdown.innerHTML = '<option value="">Select District</option>';
+                data.forEach(district => {
+                    districtDropdown.innerHTML += `<option value="${district.id}">${district.dname}</option>`;
+                });
+                districtDropdown.removeAttribute('disabled');
+            });
+        } else {
+            // If no state selected, disable and reset district and tehsil dropdowns
+            document.getElementById('district').disabled = true;
+            document.getElementById('tehsil').disabled = true;
+            document.getElementById('district').innerHTML = '<option value="">Select District</option>';
+            document.getElementById('tehsil').innerHTML = '<option value="">Select Tehsil</option>';
+        }
+    }
+
+    function getTehsils() {
+        var districtId = document.getElementById('district').value;
+        if (districtId) {
+            // Fetch tehsils based on selected district
+            fetch('/get-tehsils', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({ district_id: districtId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                var tehsilDropdown = document.getElementById('tehsil');
+                tehsilDropdown.innerHTML = '<option value="">Select Tehsil</option>';
+                data.forEach(tehsil => {
+                    tehsilDropdown.innerHTML += `<option value="${tehsil.id}">${tehsil.tname}</option>`;
+                });
+                tehsilDropdown.removeAttribute('disabled');
+            });
+        } else {
+            // If no district selected, disable and reset tehsil dropdown
+            document.getElementById('tehsil').disabled = true;
+            document.getElementById('tehsil').innerHTML = '<option value="">Select Tehsil</option>';
+        }
+    }
+</script>
 {{-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script> --}}
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="{{ asset('js/validation.js') }}"></script>

@@ -4,15 +4,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\State;
+use App\Models\District;
+use App\Models\Tehsil;
 use Illuminate\Http\Request;
 
 class StateController extends Controller
 {
-    public function newState()
+    public function newAction()
     {
-        // $states = State::distinct('sname')->pluck('sname');
-        // return view('state', compact('states'));
-        $states = State::pluck('sname', 'sid'); // Assuming 'name' is the column you want to display and 'id' is the key
-        return view('Student.student', compact('states'));
+        $states = State::pluck('sname', 'sid');
+        $districts = District::pluck('dname', 'did', 'sid');
+        $tehsils = Tehsil::pluck('tname', 'tid', 'did');
+
+
+        return view('Student.student', compact('states', 'districts', 'tehsils'));
     }
 }
